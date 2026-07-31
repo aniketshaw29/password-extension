@@ -3,12 +3,7 @@
 // ── Messaging helpers ─────────────────────────────────────────────────────────
 
 function bg(type, payload) {
-  return new Promise((resolve) => {
-    chrome.runtime.sendMessage({ type, ...payload }, (res) => {
-      if (chrome.runtime.lastError) resolve(null);
-      else resolve(res);
-    });
-  });
+  return chrome.runtime.sendMessage({ type, ...payload });
 }
 
 // ── View management ───────────────────────────────────────────────────────────

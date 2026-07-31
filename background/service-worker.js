@@ -189,9 +189,24 @@ async function handleMessage(message) {
   }
 }
 
-chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
-  handleMessage(message)
-    .then(sendResponse)
-    .catch(err => sendResponse({ ok: false, error: err.message }));
-  return true; // keep channel open for async response
-});
+if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.onMessage) {
+  chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
+    handleMessage(message)
+      .then(sendResponse)
+      .catch(err => sendResponse({ ok: false, error: err.message }));
+    return true;
+  });
+}
+
+export {
+  getVaultLocked,
+  setVaultLocked,
+  unlockVault,
+  lockVault,
+  searchEntries,
+  getEntry,
+  saveEntry,
+  updateEntry,
+  deleteEntry,
+  handleMessage,
+};
