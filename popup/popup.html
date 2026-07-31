@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Password Vault</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+
+  <!-- Loading -->
+  <div id="view-loading" class="view">
+    <div class="center-msg">
+      <div class="spinner"></div>
+      <p class="muted">Connecting to vault…</p>
+    </div>
+  </div>
+
+  <!-- Server unreachable -->
+  <div id="view-error" class="view hidden">
+    <div class="center-msg">
+      <p class="error-icon">⚠️</p>
+      <p class="error-text">Cannot reach vault at<br><code>127.0.0.1:5000</code></p>
+      <p class="muted small">Make sure Flask is running.</p>
+      <button id="btn-retry" class="btn btn-primary full-width">Retry</button>
+    </div>
+  </div>
+
+  <!-- Locked -->
+  <div id="view-locked" class="view hidden">
+    <div class="lock-header">
+      <span class="lock-icon">🔒</span>
+      <h2>Password Vault</h2>
+      <p class="muted small">Enter your master password to unlock</p>
+    </div>
+    <div class="form-group">
+      <input
+        type="password"
+        id="master-password"
+        class="input"
+        placeholder="Master password"
+        autocomplete="current-password"
+        autofocus
+      >
+    </div>
+    <p id="unlock-error" class="error-text hidden"></p>
+    <button id="btn-unlock" class="btn btn-primary full-width">Unlock</button>
+  </div>
+
+  <!-- Main view (unlocked) -->
+  <div id="view-main" class="view hidden">
+    <header class="main-header">
+      <input type="search" id="search-input" class="input search-input" placeholder="Search entries…">
+      <button id="btn-lock" class="btn btn-icon" title="Lock vault">🔒</button>
+    </header>
+
+    <!-- Tab bar -->
+    <nav class="tab-bar">
+      <button class="tab active" data-tab="matches">Matches</button>
+      <button class="tab" data-tab="save">Save New</button>
+    </nav>
+
+    <!-- Matches tab -->
+    <div id="tab-matches" class="tab-content">
+      <ul id="entry-list" class="entry-list"></ul>
+      <p id="no-matches" class="muted center-msg hidden">No matching entries.</p>
+    </div>
+
+    <!-- Save New tab -->
+    <div id="tab-save" class="tab-content hidden">
+      <form id="save-form" autocomplete="off" novalidate>
+        <div class="form-group">
+          <input type="text" id="save-title" class="input" placeholder="Title *" required>
+        </div>
+        <div class="form-group">
+          <input type="text" id="save-username" class="input" placeholder="Username or email">
+        </div>
+        <div class="form-group input-with-btn">
+          <input type="password" id="save-password" class="input" placeholder="Password">
+          <button type="button" id="btn-show-pw" class="btn btn-icon-sm" title="Show/hide">👁</button>
+        </div>
+        <div class="form-group">
+          <input type="url" id="save-url" class="input" placeholder="https://…">
+        </div>
+        <div class="form-group">
+          <input type="text" id="save-category" class="input" placeholder="Category (optional)">
+        </div>
+        <div class="form-group">
+          <textarea id="save-notes" class="input textarea" placeholder="Notes (optional)" rows="2"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary full-width">Save to Vault</button>
+      </form>
+      <p id="save-status" class="status-msg hidden"></p>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

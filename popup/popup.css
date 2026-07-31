@@ -1,0 +1,218 @@
+/* ── Reset & base ─────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #0f172a;
+  --surface:   #1e293b;
+  --surface2:  #334155;
+  --border:    #475569;
+  --accent:    #3b82f6;
+  --accent-h:  #2563eb;
+  --text:      #f1f5f9;
+  --muted:     #94a3b8;
+  --error:     #f87171;
+  --success:   #4ade80;
+  --radius:    6px;
+  --font:      system-ui, -apple-system, sans-serif;
+}
+
+body {
+  width: 360px;
+  min-height: 200px;
+  max-height: 520px;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font: 13px/1.5 var(--font);
+}
+
+/* ── Views ───────────────────────────────────────────────────────────────── */
+.view { display: flex; flex-direction: column; height: 100%; }
+.hidden { display: none !important; }
+
+/* ── Loading / error / lock ─────────────────────────────────────────────── */
+.center-msg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 32px 24px;
+  text-align: center;
+}
+
+.spinner {
+  width: 24px; height: 24px;
+  border: 3px solid var(--surface2);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.error-icon { font-size: 28px; }
+.error-text { color: var(--error); font-size: 13px; line-height: 1.5; }
+.muted { color: var(--muted); }
+.small { font-size: 12px; }
+
+.lock-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 24px 24px 16px;
+}
+.lock-icon { font-size: 32px; }
+.lock-header h2 { font-size: 16px; font-weight: 600; }
+
+/* ── Forms & inputs ─────────────────────────────────────────────────────── */
+.form-group { padding: 0 16px 10px; }
+
+.input {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font: 13px var(--font);
+  padding: 8px 10px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.input:focus { border-color: var(--accent); }
+.input::placeholder { color: var(--muted); }
+.textarea { resize: vertical; min-height: 48px; }
+
+.input-with-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.input-with-btn .input { flex: 1; }
+
+/* ── Buttons ────────────────────────────────────────────────────────────── */
+.btn {
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font: 13px var(--font);
+  transition: background 0.15s, opacity 0.15s;
+}
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  padding: 9px 16px;
+  font-weight: 500;
+}
+.btn-primary:hover:not(:disabled) { background: var(--accent-h); }
+
+.btn-icon {
+  background: transparent;
+  color: var(--muted);
+  font-size: 16px;
+  padding: 4px 6px;
+  border-radius: var(--radius);
+}
+.btn-icon:hover { color: var(--text); background: var(--surface2); }
+
+.btn-icon-sm {
+  background: var(--surface2);
+  color: var(--muted);
+  padding: 6px 8px;
+  border-radius: var(--radius);
+  white-space: nowrap;
+}
+.btn-icon-sm:hover { color: var(--text); }
+
+.full-width { width: calc(100% - 32px); margin: 0 16px; display: block; }
+
+/* ── Unlock view specific ───────────────────────────────────────────────── */
+#view-locked .form-group { padding: 0 24px 12px; }
+#view-locked .full-width { width: calc(100% - 48px); margin: 0 24px; }
+#unlock-error { margin: 0 24px 10px; font-size: 12px; }
+
+/* ── Main header ────────────────────────────────────────────────────────── */
+.main-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 12px 8px;
+}
+.search-input { flex: 1; }
+
+/* ── Tab bar ────────────────────────────────────────────────────────────── */
+.tab-bar {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  padding: 0 12px;
+}
+.tab {
+  flex: 1;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font: 13px var(--font);
+  padding: 8px 0;
+  transition: color 0.15s, border-color 0.15s;
+}
+.tab.active { color: var(--text); border-bottom-color: var(--accent); }
+.tab:hover:not(.active) { color: var(--text); }
+
+/* ── Tab content ────────────────────────────────────────────────────────── */
+.tab-content {
+  flex: 1;
+  overflow-y: auto;
+  padding-top: 4px;
+}
+.tab-content::-webkit-scrollbar { width: 4px; }
+.tab-content::-webkit-scrollbar-track { background: transparent; }
+.tab-content::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 4px; }
+
+/* ── Entry list ─────────────────────────────────────────────────────────── */
+.entry-list { list-style: none; }
+
+.entry-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--surface);
+  transition: background 0.1s;
+}
+.entry-row:hover { background: var(--surface); }
+
+.entry-info { flex: 1; overflow: hidden; }
+.entry-title { display: block; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.entry-url { display: block; color: var(--muted); font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.btn-autofill {
+  background: var(--surface2);
+  border: none;
+  border-radius: var(--radius);
+  color: var(--text);
+  cursor: pointer;
+  font: 12px var(--font);
+  padding: 5px 10px;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.btn-autofill:hover:not(:disabled) { background: var(--accent); }
+.btn-autofill:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ── Save form ──────────────────────────────────────────────────────────── */
+#tab-save { padding-top: 12px; }
+#tab-save .full-width { margin-bottom: 0; }
+
+.status-msg {
+  text-align: center;
+  padding: 8px 16px;
+  font-size: 12px;
+  border-radius: var(--radius);
+  margin: 8px 16px 0;
+}
+.status-msg.success { color: var(--success); }
+.status-msg.error { color: var(--error); }
